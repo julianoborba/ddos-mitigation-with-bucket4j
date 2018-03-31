@@ -1,0 +1,67 @@
+
+# To use the rate limit in your project you have to add the Bucket4j
+# Spring Boot Starter dependency in your project. Additionally you
+# need to add a JSR 107 provider like Ehcache which will be auto
+# configured with the Spring Boot Starter Cache.
+spring:
+  application:
+    name: zuul
+  cache:
+    # Ehcache offer an implementation that is fully compliant with the JCache (aka JSR-107) specification.
+    jcache:
+      config: classpath:ehcache.xml
+
+server:
+  port: 8079
+
+zuul:
+  #Service will be mapped under the /ddos URI
+  prefix: /ddos
+  routes:
+    someservice:
+      path: /someservice/**
+      servicId: someservice
+
+control:
+  access:
+    eureka:
+      credentials:
+        user: eureka
+        pass: eureka
+
+eureka:
+  instance:
+    hostname: localhost
+    securePort: 8302
+    instanceId: ${spring.application.name}:${random.int}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    registry-fetch-interval-seconds: 10
+    service-url:
+      defaultZone: http://${control.access.eureka.credentials.user}:${control.access.eureka.credentials.pass}@${eureka.instance.hostname}:${eureka.instance.securePort}/eureka/
+
+# https://github.com/MarcGiffing/bucket4j-spring-boot-starter
+
+# The current configuration limits all requests.
+# It allows a maximum of 2 requests within 5 minutes.
+bucket4j:
+  enabled: true
+  filters:
+  - cache-name: buckets
+    filter-method: zuul
+    url: /ddos/someservice/verylazy
+    rate-limits:
+    - bandwidths:
+      - capacity: 2
+        time: 5
+        unit: minutes
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 60000
