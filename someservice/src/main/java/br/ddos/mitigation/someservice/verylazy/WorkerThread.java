@@ -1,4 +1,4 @@
-package br.ddos.mitigation.someservice.verylaze;
+package br.ddos.mitigation.someservice.verylazy;
 
 public class WorkerThread implements Runnable {
 
@@ -13,15 +13,20 @@ public class WorkerThread implements Runnable {
 
         for (int i = 0; i <= 100; i += 20) {
 
-            // Perform some work ...
             System.out.println("Worker number: " + workerNumber + ", percent complete: " + i);
+
             try {
+
                 try {
-                    ClassLoader.getSystemClassLoader().loadClass("br.ddos.mitigation.someservice.verylaze.BigByte");
+
+                    ClassLoader.getSystemClassLoader().loadClass("br.ddos.mitigation.someservice.verylazy.BigByte");
+
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+
                 Thread.sleep(30000);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

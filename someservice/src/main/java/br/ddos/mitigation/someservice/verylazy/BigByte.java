@@ -1,4 +1,4 @@
-package br.ddos.mitigation.someservice.verylaze;
+package br.ddos.mitigation.someservice.verylazy;
 
 public class BigByte {
 
