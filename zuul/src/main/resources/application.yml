@@ -50,7 +50,7 @@ bucket4j:
   filters:
   - cache-name: buckets
     filter-method: zuul
-    url: /ddos/someservice/verylazy
+    url: "/ddos/someservice/[a-z]+"
     rate-limits:
     - bandwidths:
       - capacity: 2
