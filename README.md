@@ -17,4 +17,4 @@ localhost:8079/ddos/someservice/verylazy
 
 ```
 
-DDoS script [here](ddos.sh).
+DDoS script for fun and one day some profit [here](sudo.sh).

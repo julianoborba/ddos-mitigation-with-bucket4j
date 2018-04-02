@@ -50,12 +50,41 @@ bucket4j:
   filters:
   - cache-name: buckets
     filter-method: zuul
-    url: "/ddos/someservice/[a-z]+"
+    url: "/ddos/someservice/.+"
+    http-response-body: '{ "message": "Vam pará com essa brincadeira aí jovem!?" }'
     rate-limits:
     - bandwidths:
       - capacity: 2
         time: 5
         unit: minutes
+
+# Other, non tested in this project, sample with Spring Expression Language 
+#bucket4j:
+#  enabled: true
+#  filters:
+#  - cache-name: buckets
+#    filter-method: servlet
+#    strategy: first
+#    url: ".+"
+#    http-response-body: '{ "message": "Too many requests!" }'
+#    filter-order: -2147483647
+#    rate-limits:
+#    - filter-key-type: expression
+#      execute-condition: "@securityService.username() == 'admin'"
+#      skip-condition: "@securityService.signedIn()"
+#      expression: "@securityService.username()?: getRemoteAddr()"
+#      bandwidths:
+#      - capacity: 10
+#        time: 1
+#        unit: minutes
+#    - filter-key-type: expression
+#      execute-condition: "@securityService.username() != 'admin'"
+#      skip-condition: (!@securityService.getGroup() == 'testuser')
+#      expression: "@securityService.username()?: getRemoteAddr()"
+#      bandwidths:
+#      - capacity: 15
+#        time: 10
+#        unit: minutes
 
 hystrix:
   command:
