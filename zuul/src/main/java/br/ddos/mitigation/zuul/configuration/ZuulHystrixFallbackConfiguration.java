@@ -17,6 +17,8 @@ public class ZuulHystrixFallbackConfiguration {
 
     // https://cloud.spring.io/spring-cloud-static/Edgware.SR2/multi/multi__router_and_filter_zuul.html#hystrix-fallbacks-for-routes
 
+    // ZuulFallbackProvider has been deprecated in newest Spring Cloud versions
+
     @Bean
     public ZuulFallbackProvider zuulFallbackProvider() {
         return new ZuulFallbackProvider() {

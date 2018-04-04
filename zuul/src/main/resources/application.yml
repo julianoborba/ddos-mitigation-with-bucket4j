@@ -96,3 +96,7 @@ hystrix:
             timeoutInMilliseconds: 60000
           semaphore:
             maxConcurrentRequests: 1600
+
+#ribbon:
+#  MaxTotalConnections: 1500
+#  MaxHttpConnectionsPerHost: 1
