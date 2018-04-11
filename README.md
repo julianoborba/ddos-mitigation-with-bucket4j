@@ -1,6 +1,6 @@
 # ddos-mitigation-with-bucket4j
 
-Sample of DDoS mitigation with bucket4j.
+A very simple sample of DDoS mitigation with bucket4j.
 
 Start order:
 
@@ -17,4 +17,4 @@ localhost:8079/ddos/someservice/verylazy
 
 ```
 
-DDoS script, with a touch of black hating, for fun and one day some profit [here](sudo.sh).
+DDoS script, with a touch of black hat hacking, for fun and one day some profit [here](sudo.sh).
