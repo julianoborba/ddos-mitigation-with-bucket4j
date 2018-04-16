@@ -50,7 +50,7 @@ bucket4j:
   filters:
   - cache-name: buckets
     filter-method: zuul
-    url: "/ddos/someservice/.+"
+    url: "/ddos/someservice/verylazy"
     http-response-body: '{ "message": "Vam pará com essa brincadeira aí jovem!?" }'
     rate-limits:
     - bandwidths:
